@@ -1,0 +1,1 @@
+@SeoCollection = new Meteor.Collection('seo')
