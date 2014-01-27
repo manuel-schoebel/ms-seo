@@ -97,7 +97,7 @@ Often times you want to set your SEO data dynamically, for example if you have a
             return;
           }
           post = this.data().post;
-          return SEO.set({
+          SEO.set({
             title: post.title,
             meta: [
               {
@@ -120,4 +120,4 @@ Often times you want to set your SEO data dynamically, for example if you have a
       });
     });
 
-You use the SEO.set(object) method and the object param looks the same as a document of the 'SeoCollection'.
+You can use the SEO.set(object) method and the object param looks the same as a document of the 'SeoCollection' but has no route_name.
