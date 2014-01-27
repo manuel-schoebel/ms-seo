@@ -40,7 +40,7 @@ You can set some standard values. This will be set if nothing else is available.
       });
     });
     
-As you can see a meta tag in the <head> area is defined by a key and a value and it works the same way for the Open Graph 'og' tags.
+As you can see a meta tag in the head area is defined by a key and a value and it works the same way for the Open Graph 'og' tags.
 
 Static SEO Data
 =====
