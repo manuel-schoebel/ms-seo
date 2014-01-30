@@ -4,7 +4,7 @@ ms-seo
 A seo helper package for meteor.js
 
 Prerequisites
-======
+----
 You need to add the Iron-Router package.
 
     mrt add iron-router
