@@ -11,7 +11,7 @@ You need to add the Iron-Router package.
 
 
 Installation
-======
+----
 This package is not on meteorite, yet. Add this repository to your smart.json file.
 
     "ms-seo": {
@@ -19,7 +19,7 @@ This package is not on meteorite, yet. Add this repository to your smart.json fi
     },
 
 Configuration
-======
+----
 You can set some standard values. This will be set if nothing else is available.
 
     Meteor.startup(function() {
@@ -43,7 +43,7 @@ You can set some standard values. This will be set if nothing else is available.
 As you can see a meta tag in the head area is defined by a key and a value and it works the same way for the Open Graph 'og' tags.
 
 Static SEO Data
-=====
+----
 The SEO data for your static sites which do not have dynamic content are set in a collection called 'SeoCollection'. Every document must have a 'route_name' that relates to a named route of your Iron-Router routes.
 
     SeoCollection.insert({
@@ -70,7 +70,7 @@ The SEO data for your static sites which do not have dynamic content are set in 
 If a route changes, the SEO package automatically fetches the new data from this collection and sets all tags.
 
 Dynamic SEO Data
-======
+----
 Often times you want to set your SEO data dynamically, for example if you have a blog and you want that the documents title is equal to the blogposts title. You can do this easily in the Iron-Router after hook like this:
 
 
@@ -123,9 +123,13 @@ Often times you want to set your SEO data dynamically, for example if you have a
 You can use the SEO.set(object) method and the object param looks the same as a document of the 'SeoCollection' but has no route_name.
 
 Rel Author for Google Authorship
-======
+----
 You can configure google authorship easily with
+
     rel_author: 'https://www.google.com/+ManuelSchoebel'
+
 The output in your header will be the rel author link like this:
+
     <link href="https://www.google.com/+ManuelSchoebel" rel="author">
+
 You can use 'rel_author' in the configuration, SeoCollection entries or in SEO.set as well.
