@@ -1,6 +1,7 @@
 SEO =
   settings: {
     title: ''
+    rel_author: ''
     meta: [
       {key: 'description', value: ''}
     ]
@@ -20,12 +21,21 @@ SEO =
       for o in options.og
         SEO.setMeta("property='og:#{o.key}'", o.value)
     SEO.setTitle options.title if options.title
+    SEO.setLink options.rel_author, 'author' if options.rel_author
   clearAll: ->
     $("meta").remove()
     @set(@settings)
     @setTitle(@settings.title)
   setTitle: (title) ->
     document.title = title
+  setLink: (href, rel) ->
+    if $("link[rel=#{rel}]").length is 0
+      $('head').append("<link href='#{href}' rel='#{rel}'>")
+    else
+      if href
+        $("link[rel='#{rel}']").attr('href', href)
+      else
+        $("link[rel='#{rel}']").remove()
   setMeta: (attr, content) ->
     if $("meta[#{attr}]").length is 0
       if content
