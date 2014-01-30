@@ -121,3 +121,11 @@ Often times you want to set your SEO data dynamically, for example if you have a
     });
 
 You can use the SEO.set(object) method and the object param looks the same as a document of the 'SeoCollection' but has no route_name.
+
+Rel Author for Google Authorship
+======
+You can configure google authorship easily with
+    rel_author: 'https://www.google.com/+ManuelSchoebel'
+The output in your header will be the rel author link like this:
+    <link href="https://www.google.com/+ManuelSchoebel" rel="author">
+You can use 'rel_author' in the configuration, SeoCollection entries or in SEO.set as well.
