@@ -12,11 +12,9 @@ You need to add the Iron-Router package.
 
 Installation
 ----
-This package is not on meteorite, yet. Add this repository to your smart.json file.
+This package is on meteorite.
 
-    "ms-seo": {
-      "git": "https://github.com/DerMambo/ms-seo"
-    },
+    mrt add ms-seo
 
 Configuration
 ----
