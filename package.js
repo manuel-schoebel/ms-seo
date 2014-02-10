@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "A blog system for meteor"
+  summary: "Easily config SEO for your routes"
 });
 
 Package.on_use(function(api){
