@@ -2,7 +2,7 @@
   "name": "ms-seo",
   "description": "Makes it easy to handle typical SEO meta data",
   "homepage": "https://github.com/DerMambo/ms-seo",
-  "author": "Manuel Schoebel (http://manuel-schoebel.com",
+  "author": "Manuel Schoebel (http://manuel-schoebel.com)",
   "version": "0.1.2",
   "git": "https://github.com/DerMambo/ms-seo",
   "packages": {}
