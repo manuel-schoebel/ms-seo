@@ -56,7 +56,6 @@ Dynamic SEO Data
 ----
 Often times you want to set your SEO data dynamically, for example if you have a blog and you want that the documents title is equal to the blogposts title. You can do this easily in the Iron-Router after hook like this:
 
-
     Router.map(function() {
       return this.route('blogPost', {
         path: '/blog/:slug',
