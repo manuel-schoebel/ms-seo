@@ -23,18 +23,12 @@ You can set some standard values. This will be set if nothing else is available.
     Meteor.startup(function() {
       return SEO.config({
         title: 'Manuel Schoebel - MVP Development',
-        meta: [
-          {
-            key: 'description',
-            value: 'Manuel Schoebel develops Minimal Viable Producs (MVP) for Startups'
-          }
-        ],
-        og: [
-          {
-            key: 'image',
-            value: 'http://manuel-schoebel.com/images/authors/manuel-schoebel.jpg'
-          }
-        ]
+        meta: {
+          'description': 'Manuel Schoebel develops Minimal Viable Producs (MVP) for Startups'
+        },
+        og: {
+          'image': 'http://manuel-schoebel.com/images/authors/manuel-schoebel.jpg' 
+        }
       });
     });
     
@@ -47,22 +41,13 @@ The SEO data for your static sites which do not have dynamic content are set in 
     SeoCollection.insert({
       route_name: 'aboutMe',
       title: 'About - Manuel Schoebel',
-      meta: [
-        {
-          key: 'description',
-          value: 'Manuel Schoebel is an experienced web developer and startup founder. He develops but also consults startups about internet topics.'
-        }
-      ],
-      og: [
-        {
-          key: 'title',
-          value: 'About - Manuel Schoebel'
-        },
-        {
-          key: 'image',
-          value: 'http://manuel-schoebel.com/images/authors/manuel-schoebel.jpg'
-        }
-      ]
+      meta: {
+        'description': 'Manuel Schoebel is an experienced web developer and startup founder. He develops but also consults startups about internet topics.'
+      },
+      og: {
+        'title': 'About - Manuel Schoebel',
+        'image': 'http://manuel-schoebel.com/images/authors/manuel-schoebel.jpg'
+      }
     });
 
 If a route changes, the SEO package automatically fetches the new data from this collection and sets all tags.
@@ -97,22 +82,13 @@ Often times you want to set your SEO data dynamically, for example if you have a
           post = this.data().post;
           SEO.set({
             title: post.title,
-            meta: [
-              {
-                key: 'description',
-                value: post.description
-              }
-            ],
-            og: [
-              {
-                key: 'title',
-                value: post.title
-              }, 
-              {
-                key: 'description',
-                value: post.description
-              }
-            ]
+            meta: {
+              'description': post.description
+            },
+            og: {
+              title': post.title,
+              'description': post.description
+            }
           });
         }
       });
@@ -131,3 +107,7 @@ The output in your header will be the rel author link like this:
     <link href="https://www.google.com/+ManuelSchoebel" rel="author">
 
 You can use 'rel_author' in the configuration, SeoCollection entries or in SEO.set as well.
+
+You Need More?
+----
+If you have different needs regarding meta tags and seo, please add a feature request by adding a new Issue.
