@@ -14,12 +14,23 @@ SEO =
   config: (settings) ->
     _.extend(@settings, settings)
   set: (options) ->
-    if options.meta
-      for m in options.meta
+    meta = options.meta
+    og = options.og
+    # set meta
+    if meta and _.isArray(meta)
+      for m in meta
         SEO.setMeta("name='#{m.key}'", m.value)
-    if options.og
-      for o in options.og
+    else if meta and _.isObject(meta)
+      for k, v of meta
+        SEO.setMeta("name='#{k}'", v)
+    # set og
+    if og and _.isArray(og)
+      for o in og
         SEO.setMeta("property='og:#{o.key}'", o.value)
+    else if og and _.isObject(og)
+      for k, v of og
+        SEO.setMeta("property='og:#{k}'", v)
+
     SEO.setTitle options.title if options.title
     SEO.setLink options.rel_author, 'author' if options.rel_author
   clearAll: ->
@@ -45,6 +56,7 @@ SEO =
         $("meta[#{attr}]").attr('content', content)
       else
         $("meta[#{attr}]").remove()
+
 
 @SEO = SEO
 
