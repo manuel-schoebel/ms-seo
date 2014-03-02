@@ -10,6 +10,8 @@ SEO =
       {key: 'url', value: ''}
       {key: 'image', value: ''}
     ]
+    ignore:
+        meta: ['fragment']
   }
   config: (settings) ->
     _.extend(@settings, settings)
@@ -34,7 +36,8 @@ SEO =
     SEO.setTitle options.title if options.title
     SEO.setLink options.rel_author, 'author' if options.rel_author
   clearAll: ->
-    $("meta").remove()
+    for m in $("meta")
+      $(m).remove() if _.indexOf(SEO.settings.ignore.meta, $(m).attr('name')) is -1
     @set(@settings)
     @setTitle(@settings.title)
   setTitle: (title) ->
