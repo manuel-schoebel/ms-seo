@@ -10,6 +10,11 @@ SEO =
       {key: 'url', value: ''}
       {key: 'image', value: ''}
     ]
+    twitter: [
+      {key: 'title', value: ''}
+      {key: 'url', value: ''}
+      {key: 'description', value: ''}
+    ]
     ignore:
         meta: ['fragment']
   }
@@ -18,6 +23,7 @@ SEO =
   set: (options) ->
     meta = options.meta
     og = options.og
+    twitter = options.twitter
     # set meta
     if meta and _.isArray(meta)
       for m in meta
@@ -32,6 +38,13 @@ SEO =
     else if og and _.isObject(og)
       for k, v of og
         SEO.setMeta("property='og:#{k}'", v)
+    # set twitter
+    if twitter and _.isArray(twitter)
+      for o in twitter
+        SEO.setMeta("property='twitter:#{o.key}'", o.value)
+    else if twitter and _.isObject(twitter)
+      for k, v of twitter
+        SEO.setMeta("property='twitter:#{k}'", v)
 
     SEO.setTitle options.title if options.title
     SEO.setLink options.rel_author, 'author' if options.rel_author
