@@ -25,6 +25,9 @@ SEO =
     og = options.og
     link = options.link
 
+    @setTitle options.title if options.title
+    @setUrl options.url if options.url
+
     # set meta
     if meta and _.isArray(meta)
       for m in meta
@@ -48,8 +51,6 @@ SEO =
     else if link and _.isObject(link)
       for k, v of link
         @setLink(k, v)
-
-    @setTitle options.title if options.title
     @setLink 'author', options.rel_author if options.rel_author
 
   clearAll: ->
@@ -67,6 +68,13 @@ SEO =
         @setMeta 'property="twitter:title"', title
       if @settings.auto.og
         @setMeta 'property="og:title"', title
+
+  setUrl: (url) ->
+    if _.indexOf(@settings.auto.set, 'url') isnt -1
+      if @settings.auto.twitter
+        @setMeta 'property="twitter:url"', url
+      if @settings.auto.og
+        @setMeta 'property="og:url"', url
 
   setLink: (rel, href, unique=true) ->
     @removeLink(rel) if unique
@@ -91,14 +99,12 @@ SEO =
     if content
       $('head').append("<meta #{attr} content='#{content}'>")
 
-    console.log 'indexOfAutoMeta', @settings.auto.meta, attr, _.indexOf(@settings.auto.meta, attr)
+    #console.log 'indexOfAutoMeta', @settings.auto.set, attr, _.indexOf(@settings.auto.set, attr)
     name = attr.replace(/"|'/g, '').split('=')[1]
-    if _.indexOf(@settings.auto.meta, name) isnt -1
+    if _.indexOf(@settings.auto.set, name) isnt -1
       if @settings.auto.twitter
-        console.log 'auto set meta twitter', attr
         @setMeta "property='twitter:#{name}'", content
       if @settings.auto.og
-        console.log 'auto set meta og', attr
         @setMeta "property='og:#{name}'", content
 
   removeMeta: (attr) ->
@@ -108,7 +114,9 @@ SEO =
 @SEO = SEO
 
 # IR before hooks
-Router.before -> SEO.clearAll()
+Router.before ->
+  SEO.clearAll()
+  SEO.set({url: Router.url(Router.current().route.name)})
 
 getCurrentRouteName = ->
   router = Router.current()
