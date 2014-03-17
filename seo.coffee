@@ -2,63 +2,107 @@ SEO =
   settings: {
     title: ''
     rel_author: ''
-    meta: [
-      {key: 'description', value: ''}
-    ]
-    og: [
-      {key: 'title', value: ''}
-      {key: 'url', value: ''}
-      {key: 'image', value: ''}
-    ]
+    meta: []
+    og: []
     ignore:
-        meta: ['fragment']
+      meta: ['fragment']
+      link: ['stylesheet']
+    auto:
+      twitter: true
+      og: true
+      set: ['description', 'url', 'title']
   }
+
+  # e.g. ignore('meta', 'fragment')
+  ignore: (type, value) ->
+    @settings.ignore[type].push(value) if @settings.ignore[type] and _.indexOf(@settings.ignore[type], value) is -1
+
   config: (settings) ->
     _.extend(@settings, settings)
+
   set: (options) ->
     meta = options.meta
     og = options.og
+    link = options.link
+
     # set meta
     if meta and _.isArray(meta)
       for m in meta
-        SEO.setMeta("name='#{m.key}'", m.value)
+        @setMeta("name='#{m.key}'", m.value)
     else if meta and _.isObject(meta)
       for k, v of meta
-        SEO.setMeta("name='#{k}'", v)
+        @setMeta("name='#{k}'", v)
     # set og
     if og and _.isArray(og)
       for o in og
-        SEO.setMeta("property='og:#{o.key}'", o.value)
+        @setMeta("property='og:#{o.key}'", o.value)
     else if og and _.isObject(og)
       for k, v of og
-        SEO.setMeta("property='og:#{k}'", v)
+        @setMeta("property='og:#{k}'", v)
+    # set link
+    # as array {href: "...", rel: "..."}
+    # or as object {rel: href}
+    if link and _.isArray(link)
+      for l in link
+        @setLink(l.rel, l.href)
+    else if link and _.isObject(link)
+      for k, v of link
+        @setLink(k, v)
 
-    SEO.setTitle options.title if options.title
-    SEO.setLink options.rel_author, 'author' if options.rel_author
+    @setTitle options.title if options.title
+    @setLink 'author', options.rel_author if options.rel_author
+
   clearAll: ->
     for m in $("meta")
       $(m).remove() if _.indexOf(SEO.settings.ignore.meta, $(m).attr('name')) is -1
+    for l in $("link")
+      $(l).remove() if _.indexOf(SEO.settings.ignore.link, $(l).attr('rel')) is -1
     @set(@settings)
     @setTitle(@settings.title)
+
   setTitle: (title) ->
     document.title = title
-  setLink: (href, rel) ->
-    if $("link[rel=#{rel}]").length is 0
-      $('head').append("<link href='#{href}' rel='#{rel}'>")
-    else
-      if href
-        $("link[rel='#{rel}']").attr('href', href)
-      else
-        $("link[rel='#{rel}']").remove()
-  setMeta: (attr, content) ->
-    if $("meta[#{attr}]").length is 0
-      if content
-        $('head').append("<meta #{attr} content='#{content}'>")
-    else
-      if content
-        $("meta[#{attr}]").attr('content', content)
-      else
-        $("meta[#{attr}]").remove()
+    if _.indexOf(@settings.auto.set, 'title') isnt -1
+      if @settings.auto.twitter
+        @setMeta 'property="twitter:title"', title
+      if @settings.auto.og
+        @setMeta 'property="og:title"', title
+
+  setLink: (rel, href, unique=true) ->
+    @removeLink(rel) if unique
+    if _.isArray(href)
+      for h in href
+        @setLink(rel, h, false)
+      return
+
+    if href
+      $('head').append("<link rel='#{rel}' href='#{href}'>")
+
+  removeLink: (rel) ->
+    $("link[rel='#{rel}']").remove()
+
+  setMeta: (attr, content, unique=true) ->
+    @removeMeta(attr) if unique
+    if _.isArray(content)
+      for v in content
+        @setMeta(attr, v, false)
+      return
+
+    if content
+      $('head').append("<meta #{attr} content='#{content}'>")
+
+    console.log 'indexOfAutoMeta', @settings.auto.meta, attr, _.indexOf(@settings.auto.meta, attr)
+    name = attr.replace(/"|'/g, '').split('=')[1]
+    if _.indexOf(@settings.auto.meta, name) isnt -1
+      if @settings.auto.twitter
+        console.log 'auto set meta twitter', attr
+        @setMeta "property='twitter:#{name}'", content
+      if @settings.auto.og
+        console.log 'auto set meta og', attr
+        @setMeta "property='og:#{name}'", content
+
+  removeMeta: (attr) ->
+    $("meta[#{attr}]").remove()
 
 
 @SEO = SEO
