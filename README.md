@@ -1,7 +1,7 @@
 ms-seo
 ======
 
-A seo helper package for meteor.js
+A seo helper package for meteor.js. Original posted as an article here: [manuel-schoebel.com/blog/meteor-and-seo](http://www.manuel-schoebel.com/blog/meteor-and-seo "Meteor.js and SEO")
 
 Prerequisites
 ----
