@@ -1,7 +1,7 @@
 ms-seo
 ======
 
-A seo helper package for meteor.js
+A seo helper package for meteor.js. Original posted as an article here: [manuel-schoebel.com/blog/meteor-and-seo](http://www.manuel-schoebel.com/blog/meteor-and-seo "Meteor.js and SEO")
 
 Prerequisites
 ----
@@ -85,7 +85,7 @@ Often times you want to set your SEO data dynamically, for example if you have a
               'description': post.description
             },
             og: {
-              title': post.title,
+              'title': post.title,
               'description': post.description
             }
           });
@@ -106,6 +106,38 @@ The output in your header will be the rel author link like this:
     <link href="https://www.google.com/+ManuelSchoebel" rel="author">
 
 You can use 'rel_author' in the configuration, SeoCollection entries or in SEO.set as well.
+
+##Multiple Meta Tags
+For example for og:image you might want to have multiple image meta tags for one site. You can do this now by simply setting the og.image value to an array like this:
+
+    SEO.set({
+        ...
+        og: {
+          'image': ['http://www.your-domain.com/my-image-1.jpg', 'http://www.your-domain.com/my-image-2.jpg']
+        }
+    });
+
+    // results in:
+    <meta property="og:image" content="http://www.your-domain.com/my-image-1.jpg">
+    <meta property="og:image" content="http://www.your-domain.com/my-image-2.jpg">
+
+##Automatically set twitter and og meta tags like Title
+For a page you normally have exactly one title you want to use for the og:title and twitter:title meta tags. MS-SEO does this automatically for your title, url and descrption. For the description, just set the meta-description tag.
+
+You can also disable this in the settings:
+
+    Meteor.startup(function() {
+      SEO.config({
+        ...
+        auto: {
+          twitter: false,
+          og: true,
+          set: ['description', 'url', 'title']
+        }
+      });
+    });
+
+In this settings only the og metas are set automatically but not for twitter. The "set" array specifies what should be set. You could put any meta-tag in there and it will automatically be set for og or twitter as well.
 
 You Need More?
 ----
