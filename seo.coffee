@@ -4,6 +4,7 @@ SEO =
     rel_author: ''
     meta: []
     og: []
+    twitter: []
     ignore:
       meta: ['fragment']
       link: ['stylesheet']
@@ -24,6 +25,7 @@ SEO =
     meta = options.meta
     og = options.og
     link = options.link
+    twitter = options.twitter
 
     @setTitle options.title if options.title
     @setUrl options.url if options.url
@@ -35,6 +37,7 @@ SEO =
     else if meta and _.isObject(meta)
       for k, v of meta
         @setMeta("name='#{k}'", v)
+
     # set og
     if og and _.isArray(og)
       for o in og
@@ -42,6 +45,7 @@ SEO =
     else if og and _.isObject(og)
       for k, v of og
         @setMeta("property='og:#{k}'", v)
+
     # set link
     # as array {href: "...", rel: "..."}
     # or as object {rel: href}
@@ -51,6 +55,16 @@ SEO =
     else if link and _.isObject(link)
       for k, v of link
         @setLink(k, v)
+
+    # set twitter
+    if twitter and _.isArray(twitter)
+      for o in twitter
+        @setMeta("property='twitter:#{o.key}'", o.value)
+    else if twitter and _.isObject(twitter)
+      for k, v of twitter
+        @setMeta("property='twitter:#{k}'", v)
+
+    # set google+ rel author
     @setLink 'author', options.rel_author if options.rel_author
 
   clearAll: ->
