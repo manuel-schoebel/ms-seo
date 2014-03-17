@@ -130,7 +130,8 @@ SEO =
 # IR before hooks
 Router.before ->
   SEO.clearAll()
-  SEO.set({url: Router.url(Router.current().route.name)})
+  currentRouter = Router.current()
+  SEO.set({url: Router.url(currentRouter.route.name, currentRouter.params)})
 
 getCurrentRouteName = ->
   router = Router.current()
