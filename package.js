@@ -5,7 +5,7 @@ Package.describe({
 Package.on_use(function(api){
   var both = ['client', 'server'];
 
-  api.use(['coffeescript'], both);
+  api.use(['coffeescript', 'underscore'], both);
 
   api.use([
     'jquery',
