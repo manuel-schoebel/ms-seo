@@ -21,7 +21,13 @@ SEO =
   config: (settings) ->
     _.extend(@settings, settings)
 
-  set: (options) ->
+  set: (options, clearBefore=true) ->
+    @clearAll() if clearBefore
+
+    currentRouter = Router.current()
+    url = Router.url(currentRouter.route.name, currentRouter.params) if currentRouter
+    #SEO.set({url: Router.url(currentRouter.route.name, currentRouter.params)})
+
     meta = options.meta
     og = options.og
     link = options.link
@@ -72,7 +78,7 @@ SEO =
       $(m).remove() if _.indexOf(SEO.settings.ignore.meta, $(m).attr('name')) is -1
     for l in $("link")
       $(l).remove() if _.indexOf(SEO.settings.ignore.link, $(l).attr('rel')) is -1
-    @set(@settings)
+    @set(@settings, false)
     @setTitle(@settings.title)
 
   setTitle: (title) ->
@@ -126,12 +132,6 @@ SEO =
 
 
 @SEO = SEO
-
-# IR before hooks
-Router.before ->
-  SEO.clearAll()
-  currentRouter = Router.current()
-  SEO.set({url: Router.url(currentRouter.route.name, currentRouter.params)})
 
 getCurrentRouteName = ->
   router = Router.current()
