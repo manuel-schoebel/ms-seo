@@ -75,9 +75,22 @@ SEO =
 
   clearAll: ->
     for m in $("meta")
-      $(m).remove() if _.indexOf(SEO.settings.ignore.meta, $(m).attr('name')) is -1
+      $m = $(m)
+      # do not remove anything you do not control
+      # MS Seo only sets metas with a name or property
+      # Probably not the best solution
+      controlled = $m.attr('name') or $m.attr('property')
+      ignored = false
+      if $m.attr('name') and _.indexOf(SEO.settings.ignore.meta, $m.attr('name')) > -1
+        ignored = true
+      else if $m.attr('property') and _.indexOf(SEO.settings.ignore.meta, $m.attr('property')) > -1
+        ignored = true
+      if not ignored and controlled
+        $m.remove()
     for l in $("link")
-      $(l).remove() if _.indexOf(SEO.settings.ignore.link, $(l).attr('rel')) is -1
+      $l = $(l)
+      controlled = $l.attr 'rel'
+      $l.remove() if _.indexOf(SEO.settings.ignore.link, $l.attr('rel')) is -1 and controlled
     @set(@settings, false)
     @setTitle(@settings.title)
 
