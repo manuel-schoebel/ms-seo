@@ -129,10 +129,11 @@ SEO =
         @setMeta(attr, v, false)
       return
 
-    if content
-      $('head').append("<meta #{attr} content='#{content}'>")
+    return unless content
+    content = escapeHtmlAttribute(content)
 
-    #console.log 'indexOfAutoMeta', @settings.auto.set, attr, _.indexOf(@settings.auto.set, attr)
+    $('head').append("<meta #{attr} content='#{content}'>")
+
     name = attr.replace(/"|'/g, '').split('=')[1]
     if _.indexOf(@settings.auto.set, name) isnt -1
       if @settings.auto.twitter
@@ -145,6 +146,9 @@ SEO =
 
 
 @SEO = SEO
+
+escapeHtmlAttribute = (string) ->
+  return ("" + string).replace(/'/g, "&apos;").replace(/"/g, "&quot;")
 
 getCurrentRouteName = ->
   router = Router.current()
