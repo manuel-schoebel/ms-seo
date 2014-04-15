@@ -1,4 +1,4 @@
-SEO =
+@SEO =
   settings: {
     title: ''
     rel_author: ''
@@ -12,14 +12,41 @@ SEO =
       twitter: true
       og: true
       set: ['description', 'url', 'title']
+    # if to use seo route settings from collection
+    use_collection: false
   }
 
   # e.g. ignore('meta', 'fragment')
   ignore: (type, value) ->
     @settings.ignore[type].push(value) if @settings.ignore[type] and _.indexOf(@settings.ignore[type], value) is -1
 
+  # storage of deps handles
+  deps: []
+
   config: (settings) ->
     _.extend(@settings, settings)
+
+    if @settings.use_collection is true
+      # Get seo settings depending on route
+      @deps.push Deps.autorun( ->
+        currentRouteName = getCurrentRouteName()
+        return unless currentRouteName
+        Meteor.subscribe('seoByRouteName', currentRouteName)
+      )
+
+      # Set seo settings depending on route
+      @deps.push Deps.autorun( ->
+        return unless SEO
+        currentRouteName = getCurrentRouteName()
+        settings = SeoCollection.findOne({route_name: currentRouteName}) or {}
+        SEO.set(settings)
+      )
+
+    else if @deps.length
+      # stop all deps
+      _.each @deps, (handle) ->
+        handle?.stop()
+      @deps = []
 
   set: (options, clearBefore=true) ->
     @clearAll() if clearBefore
@@ -144,29 +171,11 @@ SEO =
   removeMeta: (attr) ->
     $("meta[#{attr}]").remove()
 
+  escapeHtmlAttribute: (string) ->
+    return ("" + string).replace(/'/g, "&apos;").replace(/"/g, "&quot;")
 
-@SEO = SEO
-
-escapeHtmlAttribute = (string) ->
-  return ("" + string).replace(/'/g, "&apos;").replace(/"/g, "&quot;")
-
-getCurrentRouteName = ->
-  router = Router.current()
-  return unless router
-  routeName = router.route.name
-  return routeName
-
-# Get seo settings depending on route
-Deps.autorun( ->
-  currentRouteName = getCurrentRouteName()
-  return unless currentRouteName
-  Meteor.subscribe('seoByRouteName', currentRouteName)
-)
-
-# Set seo settings depending on route
-Deps.autorun( ->
-  return unless SEO
-  currentRouteName = getCurrentRouteName()
-  settings = SeoCollection.findOne({route_name: currentRouteName}) or {}
-  SEO.set(settings)
-)
+  getCurrentRouteName: ->
+    router = Router.current()
+    return unless router
+    routeName = router.route.name
+    return routeName
