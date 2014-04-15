@@ -24,12 +24,13 @@
   deps: []
 
   config: (settings) ->
+    self = @
     _.extend(@settings, settings)
 
     if @settings.use_collection is true
       # Get seo settings depending on route
       @deps.push Deps.autorun( ->
-        currentRouteName = getCurrentRouteName()
+        currentRouteName = self.getCurrentRouteName()
         return unless currentRouteName
         Meteor.subscribe('seoByRouteName', currentRouteName)
       )
@@ -37,7 +38,7 @@
       # Set seo settings depending on route
       @deps.push Deps.autorun( ->
         return unless SEO
-        currentRouteName = getCurrentRouteName()
+        currentRouteName = self.getCurrentRouteName()
         settings = SeoCollection.findOne({route_name: currentRouteName}) or {}
         SEO.set(settings)
       )
@@ -157,7 +158,7 @@
       return
 
     return unless content
-    content = escapeHtmlAttribute(content)
+    content = @escapeHtmlAttribute(content)
 
     $('head').append("<meta #{attr} content='#{content}'>")
 
