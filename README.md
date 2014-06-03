@@ -73,7 +73,7 @@ Often times you want to set your SEO data dynamically, for example if you have a
             post: post
           };
         },
-        after: function() {
+        onAfterAction: function() {
           var post;
           // The SEO object is only available on the client.
           // Return if you define your routes on the server, too.
