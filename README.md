@@ -7,14 +7,14 @@ Prerequisites
 ----
 You need to add the Iron-Router package.
 
-    mrt add iron-router
+    meteor add iron:router
 
 
 Installation
 ----
 This package is on meteorite.
 
-    mrt add ms-seo
+    meteor add manuelschoebel:ms-seo
 
 Configuration
 ----
