@@ -1,28 +1,32 @@
 Package.describe({
-  summary: "Easily config SEO for your routes"
+  name: "manuelschoebel:ms-seo",
+  summary: "Easily config SEO for your routes",
+  git: "https://github.com/DerMambo/ms-seo.git",
+  version: "0.3.0"
 });
 
-Package.on_use(function(api){
-  var both = ['client', 'server'];
+Package.onUse(function(api){
 
-  api.use(['coffeescript', 'underscore'], both);
+  api.versionsFrom('0.9.0');
+
+  api.use(['coffeescript', 'underscore']);
 
   api.use([
     'jquery',
     'deps',
-    'iron-router'
+    'iron:router'
   ], 'client');
 
-  api.add_files([
+  api.addFiles([
     'seo_collection.coffee'
-  ], both);
+  ]);
 
   // Client Files
-  api.add_files([
+  api.addFiles([
     'seo.coffee'
   ], 'client');
 
-  api.add_files([
+  api.addFiles([
     'seo_publications.coffee'
   ], 'server');
 });
