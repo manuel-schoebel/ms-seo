@@ -25,7 +25,7 @@ SEO =
     @clearAll() if clearBefore
 
     currentRouter = Router.current()
-    url = Router.url(currentRouter.route.name, currentRouter.params) if currentRouter
+    url = Router.url(currentRouter.route.getName(), currentRouter.params) if currentRouter
     #SEO.set({url: Router.url(currentRouter.route.name, currentRouter.params)})
 
     meta = options.meta
@@ -34,7 +34,11 @@ SEO =
     twitter = options.twitter
 
     @setTitle options.title if options.title
-    @setUrl options.url if options.url
+
+    if options.url
+      @setUrl options.url
+    else if url
+      @setUrl url
 
     # set meta
     if meta and _.isArray(meta)
