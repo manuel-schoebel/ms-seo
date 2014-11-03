@@ -7,7 +7,7 @@ SEO =
     twitter: []
     ignore:
       meta: ['fragment']
-      link: ['stylesheet']
+      link: ['stylesheet', 'icon', 'apple-touch-icon']
     auto:
       twitter: true
       og: true
@@ -153,7 +153,7 @@ escapeHtmlAttribute = (string) ->
 getCurrentRouteName = ->
   router = Router.current()
   return unless router
-  routeName = router.route.name
+  routeName = router.route.getName()
   return routeName
 
 # Get seo settings depending on route

@@ -1,1 +1,1 @@
-@SeoCollection = new Meteor.Collection('seo')
+@SeoCollection = new Mongo.Collection('seo')
