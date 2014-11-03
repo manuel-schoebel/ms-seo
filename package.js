@@ -14,7 +14,7 @@ Package.onUse(function(api){
   api.use([
     'jquery',
     'deps',
-    'iron:router@0.9.1'
+    'iron:router@1.0.0'
   ], 'client');
 
   api.addFiles([
