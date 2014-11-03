@@ -40,17 +40,27 @@ Static SEO Data
 ----
 The SEO data for your static sites which do not have dynamic content are set in a collection called 'SeoCollection'. Every document must have a 'route_name' that relates to a named route of your Iron-Router routes.
 
-    SeoCollection.insert({
-      route_name: 'aboutMe',
-      title: 'About - Manuel Schoebel',
-      meta: {
-        'description': 'Manuel Schoebel is an experienced web developer and startup founder. He develops but also consults startups about internet topics.'
-      },
-      og: {
-        'title': 'About - Manuel Schoebel',
-        'image': 'http://manuel-schoebel.com/images/authors/manuel-schoebel.jpg'
-      }
-    });
+    SeoCollection.update(
+        {
+            route_name: 'aboutMe'
+        },
+        {
+            $set: {
+                route_name: 'aboutMe',
+                title: 'About - Manuel Schoebel',
+                meta: {
+                    'description': 'Manuel Schoebel is an experienced web developer and startup founder. He develops but also consults startups about internet topics.'
+                },
+                og: {
+                    'title': 'About - Manuel Schoebel',
+                    'image': 'http://manuel-schoebel.com/images/authors/manuel-schoebel.jpg'
+                }
+            }
+        },
+        {
+            upsert: true
+        }
+    );
 
 If a route changes, the SEO package automatically fetches the new data from this collection and sets all tags.
 
