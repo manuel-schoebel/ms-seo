@@ -13,10 +13,11 @@ Package.onUse(function(api){
 
   api.use([
     'jquery',
-    'deps',
-    'iron:router@1.0.0'
+    'deps'
   ], 'client');
-
+  
+  api.use('iron:router@1.0.0', 'client', {weak: true});
+  
   api.addFiles([
     'seo_collection.coffee'
   ]);
