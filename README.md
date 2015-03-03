@@ -151,6 +151,21 @@ You can also disable this in the settings:
 
 In this settings only the og metas are set automatically but not for twitter. The "set" array specifies what should be set. You could put any meta-tag in there and it will automatically be set for og or twitter as well.
 
+##Using ignore
+You may run into a situation where you need to ignore certain tags (such as viewport meta tags). This can easily be done with MS-SEO by overwriting the standard ignore option:
+
+    Meteor.startup(function() {
+      SEO.config({
+        ...
+        ignore: {
+          meta: ['fragment', 'viewport'],
+          link: ['stylesheet', 'icon', 'apple-touch-icon']
+        }
+      });
+    });
+
+Using this setting will cause MS-SEO to ignore all meta tags with 'viewport' in the name as well as the standard ignored tags.
+
 You Need More?
 ----
 If you have different needs regarding meta tags and seo, please add a feature request by adding a new Issue.
