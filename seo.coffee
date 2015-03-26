@@ -4,6 +4,7 @@ SEO =
     rel_author: ''
     meta: []
     og: []
+    fb: []
     twitter: []
     ignore:
       meta: ['fragment']
@@ -30,6 +31,7 @@ SEO =
 
     meta = options.meta
     og = options.og
+    fb = options.fb
     link = options.link
     twitter = options.twitter
 
@@ -55,6 +57,14 @@ SEO =
     else if og and _.isObject(og)
       for k, v of og
         @setMeta("property='og:#{k}'", v)
+
+    # set fb
+    if fb and _.isArray(fb)
+      for f in fb
+        @setMeta("property='fb:#{f.key}'", f.value)
+    else if fb and _.isObject(fb)
+      for k, v of fb
+        @setMeta("property='fb:#{k}'", v)
 
     # set link
     # as array {href: "...", rel: "..."}

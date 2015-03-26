@@ -29,6 +29,9 @@ You can set some standard values. This will be set if nothing else is available.
             },
             og: {
               'image': 'http://manuel-schoebel.com/images/authors/manuel-schoebel.jpg' 
+            },
+            fb: {
+              'app_id': '1234567890'
             }
           });
         }
@@ -99,6 +102,9 @@ Often times you want to set your SEO data dynamically, for example if you have a
             og: {
               'title': post.title,
               'description': post.description
+            },
+            fb: {
+              'app_id': '1234567890'
             }
           });
         }
