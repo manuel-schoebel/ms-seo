@@ -158,6 +158,8 @@ getCurrentRouteName = ->
   router = Router.current()
   return unless router
   routeName = router.route.getName()
+  if not routeName and router.route.path() is '/'
+    routeName = '/'
   return routeName
 
 # Get seo settings depending on route
