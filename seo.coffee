@@ -1,3 +1,22 @@
+if !Package['iron:router'] && !Package['meteorhacks:flow-router']
+  throw new Meteor.Error 'router required', 'Either Iron Router or Flow Router is required to use ms-seo'
+
+if !Package['iron:router']
+  Router =
+    current: () ->
+      self = this
+      Tracker.autorun () ->
+        FlowRouter.watchPathChange()
+        self.path = FlowRouter.current()
+      if (!this.path)
+        this.path =
+          route:
+            path: ''
+      this.path.route.getName = () -> return this.path
+      return this.path
+    url: () ->
+      return this.path.path
+
 SEO =
   settings: {
     title: ''
@@ -6,8 +25,8 @@ SEO =
     og: []
     twitter: []
     ignore:
-      meta: ['fragment']
-      link: ['stylesheet', 'icon', 'apple-touch-icon']
+      meta: ['fragment', 'viewport']
+      link: ['stylesheet', 'icon', 'apple-touch-icon', 'shortcut icon']
     auto:
       twitter: true
       og: true
@@ -154,23 +173,24 @@ SEO =
 escapeHtmlAttribute = (string) ->
   return ("" + string).replace(/'/g, "&apos;").replace(/"/g, "&quot;")
 
-getCurrentRouteName = ->
-  router = Router.current()
-  return unless router
-  routeName = router.route.getName()
-  return routeName
+Meteor.startup () ->
+  getCurrentRouteName = ->
+    router = Router.current()
+    return unless router
+    routeName = router.route.getName()
+    return routeName
 
-# Get seo settings depending on route
-Deps.autorun( ->
-  currentRouteName = getCurrentRouteName()
-  return unless currentRouteName
-  Meteor.subscribe('seoByRouteName', currentRouteName)
-)
+  # Get seo settings depending on route
+  Deps.autorun( ->
+    currentRouteName = getCurrentRouteName()
+    return unless currentRouteName
+    Meteor.subscribe('seoByRouteName', currentRouteName)
+  )
 
-# Set seo settings depending on route
-Deps.autorun( ->
-  return unless SEO
-  currentRouteName = getCurrentRouteName()
-  settings = SeoCollection.findOne({route_name: currentRouteName}) or {}
-  SEO.set(settings)
-)
+  # Set seo settings depending on route
+  Deps.autorun( ->
+    return unless SEO
+    currentRouteName = getCurrentRouteName()
+    settings = SeoCollection.findOne({route_name: currentRouteName}) or {}
+    SEO.set(settings)
+  )
