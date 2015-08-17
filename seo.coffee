@@ -1,4 +1,4 @@
-if !Package['iron:router'] && !Package['meteorhacks:flow-router']
+if !Package['iron:router'] && !Package['meteorhacks:flow-router'] && !Package['kadira:flow-router']
   throw new Meteor.Error 'router required', 'Either Iron Router or Flow Router is required to use ms-seo'
 
 if !Package['iron:router']
