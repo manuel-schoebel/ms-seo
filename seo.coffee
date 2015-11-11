@@ -20,13 +20,16 @@ SEO =
 
   config: (settings) ->
     _.extend(@settings, settings)
+    @set(settings)
 
   set: (options, clearBefore=true) ->
     @clearAll() if clearBefore
 
-    currentRouter = Router.current()
-    url = Router.url(currentRouter.route.getName(), currentRouter.params) if currentRouter
-    #SEO.set({url: Router.url(currentRouter.route.name, currentRouter.params)})
+    Router = Router || undefined
+    if Router
+      currentRouter = Router.current()
+      url = Router.url(currentRouter.route.getName(), currentRouter.params) if currentRouter
+      #SEO.set({url: Router.url(currentRouter.route.name, currentRouter.params)})
 
     meta = options.meta
     og = options.og
@@ -155,6 +158,8 @@ escapeHtmlAttribute = (string) ->
   return ("" + string).replace(/'/g, "&apos;").replace(/"/g, "&quot;")
 
 getCurrentRouteName = ->
+  Router = Router || undefined
+  return unless Router
   router = Router.current()
   return unless router
   routeName = router.route.getName()
@@ -162,6 +167,8 @@ getCurrentRouteName = ->
 
 # Get seo settings depending on route
 Deps.autorun( ->
+  Router = Router || undefined
+  return unless Router
   currentRouteName = getCurrentRouteName()
   return unless currentRouteName
   Meteor.subscribe('seoByRouteName', currentRouteName)
@@ -170,6 +177,8 @@ Deps.autorun( ->
 # Set seo settings depending on route
 Deps.autorun( ->
   return unless SEO
+  Router = Router || undefined
+  return unless Router
   currentRouteName = getCurrentRouteName()
   settings = SeoCollection.findOne({route_name: currentRouteName}) or {}
   SEO.set(settings)
