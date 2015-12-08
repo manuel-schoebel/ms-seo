@@ -156,9 +156,7 @@ escapeHtmlAttribute = (string) ->
 
 getCurrentRouteName = ->
   router = Router.current()
-  return unless router and router.route
-  routeName = router.route.getName()
-  return routeName
+  return router.route.getName() if router and router.route
 
 # Get seo settings depending on route
 Deps.autorun( ->
