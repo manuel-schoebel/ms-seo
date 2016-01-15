@@ -16,6 +16,10 @@ Package.onUse(function(api){
     'deps',
     'iron:router@1.0.0'
   ], 'client');
+  
+  api.use([
+    'check'
+  ], 'server');
 
   api.addFiles([
     'seo_collection.coffee'
