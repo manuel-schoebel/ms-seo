@@ -106,6 +106,22 @@ Router.map(function() {
 
 You can use the `SEO.set(object)` method and the object param looks the same as a document of the 'SeoCollection' but has no route_name.
 
+## Adding `<link>` tags
+
+To add `<link>` tags, such as to indicate the [canonical URL](https://support.google.com/webmasters/answer/139066?hl=en), you can do so by specifying an *array* of objects into the `link` property. The object needs to follow the following structure:
+
+    {
+        rel: "<rel>",
+        href: "<link>"
+    }
+
+So for example:
+
+    link: [{
+        rel: "canonical",
+        href: "http://www.example.com/"
+    }],
+
 Rel Author for Google Authorship
 ----
 You can configure google authorship easily with
