@@ -171,4 +171,4 @@ Using this setting will cause MS-SEO to ignore all meta tags with 'viewport' in 
 
 You Need More?
 ----
-If you have different needs regarding meta tags and SEO, please [add a feature request](issues).
+If you have different needs regarding meta tags and SEO, please [add a feature request](https://github.com/DerMambo/ms-seo/issues).
