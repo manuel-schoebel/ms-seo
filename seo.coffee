@@ -156,7 +156,7 @@ escapeHtmlAttribute = (string) ->
 
 getCurrentRouteName = ->
   router = Router.current()
-  return unless router
+  return unless router and router.route
   routeName = router.route.getName()
   return routeName
 
