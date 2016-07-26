@@ -7,7 +7,7 @@ Installation
 ----
 This package is on Atmosphere:
 
-    meteor add manuelschoebel:ms-seo
+    meteor add linguahouse:ms-seo
 
 Configuration
 ----
@@ -23,7 +23,7 @@ Meteor.startup(function() {
             },
             og: {
                 'image': 'http://manuel-schoebel.com/images/authors/manuel-schoebel.jpg' 
-           }
+            }
         });
     }
 });

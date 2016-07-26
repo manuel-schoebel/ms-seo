@@ -30,6 +30,7 @@ SEO =
 
     meta = options.meta
     og = options.og
+    fb = options.fb
     link = options.link
     twitter = options.twitter
 
@@ -48,13 +49,21 @@ SEO =
       for k, v of meta
         @setMeta("name='#{k}'", v)
 
-    # set og
+    # set og:
     if og and _.isArray(og)
       for o in og
         @setMeta("property='og:#{o.key}'", o.value)
     else if og and _.isObject(og)
       for k, v of og
         @setMeta("property='og:#{k}'", v)
+
+    # set fb:
+    if fb and _.isArray(fb)
+      for o in fb
+        @setMeta("property='fb:#{o.key}'", o.value)
+    else if fb and _.isObject(fb)
+      for k, v of fb
+        @setMeta("property='fb:#{k}'", v)
 
     # set link
     # as array {href: "...", rel: "..."}
@@ -156,7 +165,7 @@ escapeHtmlAttribute = (string) ->
 
 getCurrentRouteName = ->
   router = Router.current()
-  return unless router
+  return unless router && router.route
   routeName = router.route.getName()
   return routeName
 
