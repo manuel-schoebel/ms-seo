@@ -132,7 +132,7 @@ For example for og:image you might want to have multiple image meta tags for one
     <meta property="og:image" content="http://www.your-domain.com/my-image-1.jpg">
     <meta property="og:image" content="http://www.your-domain.com/my-image-2.jpg">
 
-##Automatically set twitter and og meta tags like Title
+## Automatically set twitter and og meta tags like Title
 For a page you normally have exactly one title you want to use for the og:title and twitter:title meta tags. MS-SEO does this automatically for your title, url and descrption. For the description, just set the meta-description tag.
 
 You can also disable this in the settings:
