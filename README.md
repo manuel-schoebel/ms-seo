@@ -1,3 +1,8 @@
+# DEPRECATED
+This package is no longer maintained
+
+
+
 ms-seo
 ======
 
