@@ -25,7 +25,7 @@ SEO =
     @clearAll() if clearBefore
 
     currentRouter = Router.current()
-    url = Router.url(currentRouter.route.getName(), currentRouter.params) if currentRouter
+    url = Router.url(currentRouter.route.getName(), currentRouter.params) if currentRouter and currentRouter.route
     #SEO.set({url: Router.url(currentRouter.route.name, currentRouter.params)})
 
     meta = options.meta
@@ -156,9 +156,7 @@ escapeHtmlAttribute = (string) ->
 
 getCurrentRouteName = ->
   router = Router.current()
-  return unless router
-  routeName = router.route.getName()
-  return routeName
+  return router.route.getName() if router and router.route
 
 # Get seo settings depending on route
 Deps.autorun( ->
